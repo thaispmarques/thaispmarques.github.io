@@ -1,62 +1,417 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thais Marques — Product Design Specialist</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thais Marques — Product Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet">
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* ========== BASE ========== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --navy: #404681;
+      --cream: #ECE9DD;
+      --mint: #CFF4A0;
+      --lavender: #BDB4FF;
+      --terracotta: #AD4735;
+      --dark: #141613;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
 
     body {
-      background: #0a0a0a;
-      color: #f0ece4;
-      font-family: Georgia, serif;
-      height: 100vh;
-      overflow: hidden;
+      background: var(--navy);
+      color: var(--cream);
+      font-family: 'Lexend', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.6;
+    }
+
+    /* ========== INTRO ANIMATION ========== */
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: var(--navy);
+      z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
+      width: 100%;
+      height: 100%;
     }
 
-    video {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      opacity: 0.4;
-      z-index: 0;
-    }
-
-    .content {
+    .intro-container {
       position: relative;
-      z-index: 1;
+      width: 100%;
+      height: 100%;
     }
 
-    h1 {
-      font-size: 3rem;
+    /* M Logo */
+    .logo-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(320px, 40vw);
+      height: auto;
+      opacity: 0;
+      z-index: 10;
+    }
+
+    .logo-wrapper.in {
+      animation: logoFadeInScale 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .logo-wrapper.out {
+      animation: logoFadeOut 0.6s ease-in forwards;
+      animation-delay: 3.8s;
+    }
+
+    .logo-svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 30px 60px rgba(0,0,0,0.5)) drop-shadow(0 0 100px rgba(207,244,160,0.1));
+    }
+
+    /* Text SVG overlay */
+    .text-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+    }
+
+    .brand-text {
+      font-family: 'Lexend', sans-serif;
+      font-weight: 300;
+      fill: var(--cream);
+    }
+
+    .text-name {
+      font-size: clamp(20px, 2.2vw, 40px);
+      letter-spacing: 0.35em;
+    }
+
+    .text-title {
+      font-size: clamp(12px, 1.3vw, 22px);
+      letter-spacing: 0.45em;
+      opacity: 0.75;
+    }
+
+    /* Animations */
+    @keyframes logoFadeInScale {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.85);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    @keyframes logoFadeOut {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+
+    @keyframes introFadeOut {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+
+    /* ========== MAIN CONTENT ========== */
+    #main {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #main.visible {
+      opacity: 1;
+      pointer-events: auto;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    main {
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: var(--navy);
+      padding: 2rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 6rem);
       font-weight: 400;
       letter-spacing: 0.15em;
       text-transform: uppercase;
+      margin-bottom: 1rem;
+      color: var(--cream);
     }
 
-    .coming-soon {
-      margin-top: 1rem;
-      font-size: 0.75rem;
-      letter-spacing: 0.4em;
+    .hero p {
+      font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+      letter-spacing: 0.35em;
       text-transform: uppercase;
-      opacity: 0.45;
+      color: var(--cream);
+      opacity: 0.6;
+      font-weight: 300;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .text-name {
+        font-size: 16px;
+        letter-spacing: 0.3em;
+      }
+
+      .text-title {
+        font-size: 11px;
+        letter-spacing: 0.4em;
+      }
+
+      .logo-wrapper {
+        width: min(240px, 50vw);
+      }
     }
   </style>
 </head>
 <body>
-  <video autoplay muted loop playsinline>
-    <source src="bg.mp4" type="video/mp4" />
-  </video>
 
-  <div class="content">
-    <h1>Thais Marques</h1>
-    <p class="coming-soon">Portfolio — Coming Soon</p>
+  <!-- ============ INTRO ANIMATION ============ -->
+  <div id="intro">
+    <div class="intro-container">
+
+      <!-- M Logo (SVG) -->
+      <div class="logo-wrapper" id="logoEl">
+        <svg class="logo-svg" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+          <!-- Simplified TM monogram in mint green -->
+          <g stroke="#CFF4A0" stroke-width="32" stroke-linecap="round" stroke-linejoin="round" fill="none">
+            <!-- Top bracket frame -->
+            <path d="M 60,60 L 340,60 L 340,110 L 120,110"/>
+
+            <!-- M shape -->
+            <path d="M 100,130 L 100,380 M 100,170 L 160,270 L 220,170 L 220,380 M 220,170 L 280,270 L 340,170 L 340,380"/>
+
+            <!-- Bottom right bracket -->
+            <path d="M 340,420 L 100,420 L 100,470 L 340,470"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Text Layer -->
+      <svg class="text-layer" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Path for THAIS MARQUES: enters from left, curves up and through center -->
+          <path id="path-thais"
+            d="M -300,750 C 200,500 500,300 960,380 C 1350,450 1600,200 2150,80"
+            fill="none"/>
+
+          <!-- Path for PRODUCT DESIGNER: enters from bottom, gentle curve -->
+          <path id="path-designer"
+            d="M 100,1300 C 350,1050 600,950 960,920 C 1200,900 1600,800 2050,700"
+            fill="none"/>
+        </defs>
+
+        <!-- THAIS MARQUES -->
+        <text id="t-thais" class="brand-text text-name">
+          <textPath href="#path-thais" id="tp-thais" startOffset="-120%">
+            THAIS  MARQUES
+          </textPath>
+        </text>
+
+        <!-- PRODUCT DESIGNER -->
+        <text id="t-designer" class="brand-text text-title">
+          <textPath href="#path-designer" id="tp-designer" startOffset="-120%">
+            PRODUCT  DESIGNER
+          </textPath>
+        </text>
+      </svg>
+
+    </div>
   </div>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <main id="main">
+    <section class="hero">
+      <h1>Thais Marques</h1>
+      <p>Product Designer</p>
+    </section>
+  </main>
+
+  <script>
+    // Check if intro already played in this session
+    const introEl = document.getElementById('intro');
+    const mainEl = document.getElementById('main');
+    const logoEl = document.getElementById('logoEl');
+    const tpThais = document.getElementById('tp-thais');
+    const tpDesigner = document.getElementById('tp-designer');
+    const tThais = document.getElementById('t-thais');
+    const tDesigner = document.getElementById('t-designer');
+
+    // Easing functions
+    const ease = {
+      out: (t) => 1 - Math.pow(1 - t, 3),
+      in: (t) => t * t * t,
+      inOut: (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+      cubic: (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+    };
+
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+
+    // Animate a numeric attribute from one value to another
+    function animAttr(el, attr, from, to, duration, delay = 0, easing = ease.out) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          const startTime = performance.now();
+
+          function frame(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = easing(progress);
+            const value = lerp(from, to, eased);
+
+            el.setAttribute(attr, value + '%');
+
+            if (progress < 1) {
+              requestAnimationFrame(frame);
+            } else {
+              resolve();
+            }
+          }
+
+          requestAnimationFrame(frame);
+        }, delay);
+      });
+    }
+
+    // Animate CSS property
+    function animCSS(el, prop, from, to, duration, delay = 0, easing = ease.out) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          const startTime = performance.now();
+
+          function frame(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = easing(progress);
+            const value = lerp(parseFloat(from), parseFloat(to), eased);
+
+            el.style[prop] = value;
+
+            if (progress < 1) {
+              requestAnimationFrame(frame);
+            } else {
+              resolve();
+            }
+          }
+
+          requestAnimationFrame(frame);
+        }, delay);
+      });
+    }
+
+    function skipIntro() {
+      introEl.style.display = 'none';
+      mainEl.classList.add('visible');
+      document.body.style.overflow = 'auto';
+      sessionStorage.setItem('introPlayed', '1');
+    }
+
+    async function runIntro() {
+      // Allow instant skip on click
+      introEl.addEventListener('click', skipIntro, { once: true });
+      document.body.style.overflow = 'hidden';
+
+      // PHASE 1: Logo appears (0ms)
+      setTimeout(() => {
+        logoEl.classList.add('in');
+      }, 0);
+
+      // PHASE 2: THAIS MARQUES slides in from left (600ms start, 900ms duration)
+      await animAttr(tpThais, 'startOffset', -120, 10, 900, 600, ease.out);
+
+      // PHASE 3: PRODUCT DESIGNER slides in from bottom (900ms start, 900ms duration)
+      await animAttr(tpDesigner, 'startOffset', -120, 5, 900, 900, ease.out);
+
+      // PHASE 4: Hold state (everything visible from 1.8s to 3.2s)
+      await new Promise(r => setTimeout(r, 1400)); // Wait until 3200ms total
+
+      // PHASE 5: PRODUCT DESIGNER fades out and exits (3200ms)
+      animAttr(tpDesigner, 'startOffset', 5, 140, 700, 0, ease.in);
+      animCSS(tDesigner, 'opacity', 1, 0, 700, 0, ease.in);
+
+      // PHASE 6: THAIS MARQUES converges toward M center and fades (3300ms start)
+      animAttr(tpThais, 'startOffset', 10, 52, 750, 100, ease.in);
+      animCSS(tThais, 'opacity', 1, 0, 750, 200, ease.in);
+
+      // PHASE 7: Logo fades out (3800ms start)
+      await animCSS(logoEl, 'opacity', 1, 0, 600, 600, ease.out);
+
+      // PHASE 8: Intro fades out completely, main content appears (4400ms)
+      introEl.style.transition = 'opacity 0.8s ease';
+      introEl.style.opacity = '0';
+      mainEl.classList.add('visible');
+      document.body.style.overflow = 'auto';
+
+      setTimeout(() => {
+        introEl.style.display = 'none';
+        sessionStorage.setItem('introPlayed', '1');
+      }, 800);
+    }
+
+    // Check if intro was already played this session
+    if (sessionStorage.getItem('introPlayed')) {
+      skipIntro();
+    } else {
+      runIntro();
+    }
+
+    // Allow escape key to skip intro
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && introEl.style.display !== 'none') {
+        skipIntro();
+      }
+    });
+  </script>
+
 </body>
 </html>
