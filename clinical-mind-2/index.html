@@ -32,13 +32,86 @@
 
     html {
       scroll-behavior: smooth;
+      background: #1E2241; /* moved here so animation sits between bg and content */
     }
 
     body {
       font-family: 'Lexend', sans-serif;
-      background: var(--purple-dark);
+      background: transparent;
       color: white;
       line-height: 1.2;
+    }
+
+    /* ── Background gradient animation ── */
+    @keyframes moveVertical {
+      0%   { transform: translateY(-50%); }
+      50%  { transform: translateY(50%); }
+      100% { transform: translateY(-50%); }
+    }
+    @keyframes moveInCircle {
+      0%   { transform: rotate(0deg); }
+      50%  { transform: rotate(180deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes moveHorizontal {
+      0%   { transform: translateX(-50%) translateY(-10%); }
+      50%  { transform: translateX(50%) translateY(10%); }
+      100% { transform: translateX(-50%) translateY(-10%); }
+    }
+
+    #bg-anim {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.3;
+      overflow: hidden;
+    }
+
+    #bg-gradients {
+      width: 100%;
+      height: 100%;
+      filter: blur(200px);
+    }
+
+    .bg-blob {
+      position: absolute;
+      width: 160%; height: 160%;
+      top: -30%; left: -30%;
+    }
+
+    .bg-blob-1 {
+      background: radial-gradient(ellipse at center, rgba(195,207,184,1) 0%, rgba(195,207,184,0.4) 40%, rgba(195,207,184,0) 70%) no-repeat;
+      transform-origin: center center;
+      animation: moveVertical 60s ease infinite;
+    }
+    .bg-blob-2 {
+      background: radial-gradient(ellipse at center, rgba(173,71,53,1) 0%, rgba(173,71,53,0.4) 40%, rgba(173,71,53,0) 70%) no-repeat;
+      transform-origin: calc(50% - 400px);
+      animation: moveInCircle 40s reverse infinite;
+    }
+    .bg-blob-3 {
+      background: radial-gradient(ellipse at center, rgba(15,17,35,1) 0%, rgba(15,17,35,0.4) 40%, rgba(15,17,35,0) 70%) no-repeat;
+      transform-origin: calc(50% + 400px);
+      animation: moveInCircle 80s linear infinite;
+    }
+    .bg-blob-4 {
+      background: radial-gradient(ellipse at center, rgba(195,207,184,1) 0%, rgba(195,207,184,0.4) 40%, rgba(195,207,184,0) 70%) no-repeat;
+      transform-origin: calc(50% - 200px);
+      animation: moveHorizontal 80s ease infinite;
+    }
+    .bg-blob-5 {
+      background: radial-gradient(ellipse at center, rgba(173,71,53,1) 0%, rgba(173,71,53,0.4) 40%, rgba(173,71,53,0) 70%) no-repeat;
+      transform-origin: calc(50% - 800px) calc(50% + 800px);
+      animation: moveInCircle 40s ease infinite;
+    }
+    #bg-interactive {
+      position: absolute;
+      width: 100%; height: 100%;
+      top: -50%; left: -50%;
+      background: radial-gradient(ellipse at center, rgba(15,17,35,0.8) 0%, rgba(15,17,35,0.3) 40%, rgba(15,17,35,0) 70%) no-repeat;
+      opacity: 0.7;
     }
 
     /* ── Header ── */
@@ -646,6 +719,18 @@
 </head>
 <body>
 
+  <!-- ══ BACKGROUND ANIMATION ══ -->
+  <div id="bg-anim" aria-hidden="true">
+    <div id="bg-gradients">
+      <div class="bg-blob bg-blob-1"></div>
+      <div class="bg-blob bg-blob-2"></div>
+      <div class="bg-blob bg-blob-3"></div>
+      <div class="bg-blob bg-blob-4"></div>
+      <div class="bg-blob bg-blob-5"></div>
+      <div id="bg-interactive"></div>
+    </div>
+  </div>
+
   <!-- ══ HEADER ══ -->
   <header>
     <div class="header-logo">
@@ -931,6 +1016,37 @@
           menu.setAttribute('aria-hidden', true);
         });
       });
+    })();
+  </script>
+
+  <!-- ══ BACKGROUND ANIMATION: interactive blob ══ -->
+  <script>
+    (function () {
+      var interactive = document.getElementById('bg-interactive');
+      if (!interactive) return;
+
+      // Detect Safari to skip the SVG goo filter (same as original component)
+      var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+      if (isSafari) {
+        document.getElementById('bg-gradients').style.filter = 'blur(120px)';
+      }
+
+      var curX = 0, curY = 0, tgX = 0, tgY = 0;
+
+      window.addEventListener('mousemove', function (e) {
+        tgX = e.clientX;
+        tgY = e.clientY;
+      });
+
+      function move() {
+        curX += (tgX - curX) / 20;
+        curY += (tgY - curY) / 20;
+        interactive.style.transform =
+          'translate(' + Math.round(curX) + 'px, ' + Math.round(curY) + 'px)';
+        requestAnimationFrame(move);
+      }
+
+      move();
     })();
   </script>
 
