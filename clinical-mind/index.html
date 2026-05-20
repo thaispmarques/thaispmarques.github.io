@@ -28,7 +28,7 @@
       --divider-soft:  rgba(64, 70, 129, 0.1);
       --page-pad:      160px;
       --content-max:   1280px;
-      --divider-stroke: #57578E;
+      --divider-stroke: #6667A7;
     }
 
     html, body {
@@ -48,18 +48,24 @@
       position: relative;
     }
 
-    body::before {
-      content: '';
-      position: fixed;
+    #bg-texture {
+      position: absolute;
       top: 0; left: 0;
       width: 100%;
-      height: 100%;
-      background: url('assets/background-texture.png') no-repeat top center;
-      background-size: 100% auto;
-      opacity: 0.3;
       z-index: -1;
       pointer-events: none;
+      overflow: hidden;
     }
+
+    .bg-tile {
+      position: absolute;
+      left: 0;
+      width: 100vw;
+      background: url('assets/background.png') no-repeat top center;
+      background-size: 100vw auto;
+      opacity: 0.15;
+    }
+
 
 
     /* ── Header ── */
@@ -251,9 +257,7 @@
     /* ── Content sections ── */
     .content-section {
       border-top: 1px solid var(--divider-stroke);
-      padding-top: 64px;
-      padding-left: var(--page-pad);
-      padding-right: var(--page-pad);
+      padding: 64px var(--page-pad);
       display: flex;
       flex-direction: column;
       gap: 40px;
@@ -667,6 +671,8 @@
 </head>
 <body>
 
+  <div id="bg-texture" aria-hidden="true"></div>
+
   <!-- ══ HEADER ══ -->
   <header>
     <div class="header-logo">
@@ -955,6 +961,40 @@
     })();
   </script>
 
+
+  <!-- ══ BACKGROUND TEXTURE TILES ══ -->
+  <script>
+    (function () {
+      var IMG_SRC = 'assets/background.png';
+      var container = document.getElementById('bg-texture');
+
+      function buildTiles() {
+        var img = new Image();
+        img.src = IMG_SRC;
+        img.onload = function () {
+          var vw = window.innerWidth;
+          var tileH = Math.round(img.naturalHeight * (vw / img.naturalWidth));
+          // Use offsetHeight to measure real page height without the texture container
+          container.style.height = '0';
+          var pageH = document.body.scrollHeight;
+          var count = Math.ceil(pageH / tileH);
+
+          container.innerHTML = '';
+          container.style.height = pageH + 'px';
+          for (var i = 0; i < count; i++) {
+            var div = document.createElement('div');
+            div.className = 'bg-tile';
+            div.style.top = (i * tileH) + 'px';
+            div.style.height = tileH + 'px';
+            container.appendChild(div);
+          }
+        };
+      }
+
+      buildTiles();
+      window.addEventListener('resize', buildTiles);
+    })();
+  </script>
 
 </body>
 </html>
