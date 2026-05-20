@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clinical Mind AI — Thais Marques</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&family=Rethink+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --purple-dark:   #404681;
+      --purple-light:  #BDB4FF;
+      --lime-dark:     #9ACD6A;
+      --lime-light:    #CFF4AC;
+      --cream-light:   #EFECDF;
+      --cream-dark:    #DAD6C8;
+      --header-bg:     #6667A7;
+      --text-title:    #141613;
+      --divider-green: #5AA014;
+      --divider-soft:  rgba(64, 70, 129, 0.1);
+      --page-pad:      160px;
+      --content-max:   1280px;
+      --divider-stroke: #57578E;
+    }
+
+    html, body {
+      overscroll-behavior: none;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Lexend', sans-serif;
+      background: var(--purple-dark);
+      color: white;
+      line-height: 1.2;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--header-bg);
+      height: 78px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 var(--page-pad);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+
+    .header-logo img {
+      height: 30px;
+      width: auto;
+      display: block;
+    }
+
+    .header-nav {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 24px;
+    }
+
+    .header-nav a {
+      font-family: 'Rethink Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: white;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .header-nav a:hover { opacity: 0.75; }
+
+    /* ── Hero ── */
+    .hero {
+      border-bottom: 1px solid var(--divider-stroke);
+      padding-bottom: 64px;
+      margin-top: 78px; /* clear fixed header */
+    }
+
+    .hero-image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .hero-title {
+      padding: 64px var(--page-pad) 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .hero-title h1 {
+      font-family: 'Fireside', 'Lexend', sans-serif;
+      font-size: 50px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      color: var(--cream-light);
+      line-height: 1.1;
+    }
+
+    .hero-title .hero-sub {
+      font-family: 'Fireside', 'Lexend', sans-serif;
+      font-size: 25px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      color: var(--purple-light);
+      line-height: 1.2;
+    }
+
+    /* ── Intro section ── */
+    .intro {
+      padding: 64px var(--page-pad);
+      border-bottom: 1px solid var(--divider-stroke);
+    }
+
+    .intro-content {
+      display: flex;
+      align-items: center;
+      gap: 64px;
+    }
+
+    .intro-cards {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .info-card {
+      background: #6667A7;
+      border-radius: 40px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .info-card-label {
+      font-family: 'Lexend', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--purple-light);
+      line-height: 24px;
+    }
+
+    .info-card-value {
+      font-family: 'Lexend', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: white;
+      line-height: 24px;
+    }
+
+    .intro-arrow {
+      width: 56px;
+      height: 57px;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .intro-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .intro-text-block {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .intro-heading {
+      font-family: 'Lexend', sans-serif;
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--purple-light);
+      line-height: 28px;
+    }
+
+    .intro-body {
+      font-family: 'Rethink Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--cream-light);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .btn-outline-lime {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--lime-light);
+      border-radius: 100px;
+      padding: 8px 16px;
+      color: var(--lime-dark);
+      font-family: 'Lexend', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 24px;
+      text-decoration: none;
+      white-space: nowrap;
+      width: fit-content;
+    }
+
+    .btn-outline-lime:hover { opacity: 0.85; }
+
+    /* ── Content sections ── */
+    .content-section {
+      border-top: 1px solid var(--divider-stroke);
+      padding-top: 64px;
+      padding-left: var(--page-pad);
+      padding-right: var(--page-pad);
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      overflow: hidden;
+    }
+
+    .content-section.gap-32 { gap: 32px; }
+
+    .content-section.centered { align-items: center; }
+
+    .section-label { flex-shrink: 0; }
+
+    .section-title {
+      font-family: 'Lexend', sans-serif;
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--purple-light);
+      line-height: 28px;
+      max-width: 966px;
+    }
+
+    .section-desc {
+      font-family: 'Rethink Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: white;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      max-width: 966px;
+    }
+
+    .section-desc.cream { color: var(--cream-light); }
+
+    .section-img {
+      width: 100%;
+      display: block;
+    }
+
+    .section-img.mobile {
+      max-width: 966px;
+      width: 100%;
+    }
+
+    /* ── Data section ── */
+    .data-section {
+      border-bottom: 1px solid var(--divider-stroke);
+      padding: 64px var(--page-pad);
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      white-space: nowrap;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stat-number {
+      font-family: 'Fireside', 'Lexend', sans-serif;
+      font-size: 48px;
+      font-weight: 400;
+      font-style: normal;
+      color: var(--cream-light);
+      line-height: 48px;
+      letter-spacing: -1px;
+      text-transform: uppercase;
+    }
+
+    .stat-label {
+      font-family: 'Lexend', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--cream-light);
+      line-height: 24px;
+      letter-spacing: 0;
+    }
+
+    /* ── News section ── */
+    .news-section {
+      border-bottom: 1px solid var(--divider-stroke);
+      padding: 64px var(--page-pad);
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .news-grid {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0;
+    }
+
+    .news-card {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 325px;
+      flex-shrink: 0;
+    }
+
+    .news-img {
+      width: 100%;
+      height: 208px;
+      object-fit: cover;
+      display: block;
+      border-radius: 28px;
+    }
+
+    .news-content {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .news-title {
+      font-family: 'Lexend', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--cream-light);
+      line-height: 24px;
+      letter-spacing: 0;
+    }
+
+    .news-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Lexend', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--lime-dark);
+      text-decoration: underline;
+      text-decoration-color: var(--lime-dark);
+      line-height: 24px;
+      width: fit-content;
+    }
+
+    .news-link:hover { opacity: 0.8; }
+
+    /* ── Learn more section ── */
+    .learn-more-section {
+      border-top: 1px solid var(--divider-stroke);
+      padding: 64px var(--page-pad);
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    .learn-more-video {
+      align-self: center;
+      width: 560px;
+      height: 304px;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .learn-more-video iframe {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border: none;
+    }
+
+    @media (max-width: 768px) {
+      .learn-more-video {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 560 / 304;
+      }
+    }
+
+    /* ── Figma file section ── */
+    .figma-section {
+      border-top: 1px solid var(--divider-stroke);
+      border-bottom: 1px solid var(--divider-stroke);
+      padding: 64px var(--page-pad);
+    }
+
+    .figma-content {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .figma-text {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .figma-text .section-title { margin-bottom: 0; }
+
+    .figma-sub {
+      font-family: 'Lexend', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: white;
+      line-height: 28px;
+      white-space: nowrap;
+    }
+
+    .btn-outline-figma {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--lime-light);
+      border-radius: 100px;
+      padding: 8px 16px;
+      height: 40px;
+      color: var(--lime-dark);
+      font-family: 'Lexend', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      white-space: nowrap;
+      width: fit-content;
+    }
+
+    .btn-outline-figma:hover { opacity: 0.85; }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--header-bg);
+      border-top: 1px solid rgba(64, 70, 129, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      padding: 40px 0;
+    }
+
+    .footer-top {
+      display: flex;
+      align-items: center;
+      gap: 59px;
+      padding: 0 var(--page-pad);
+    }
+
+    .footer-logo img {
+      width: 412px;
+      height: 68px;
+      display: block;
+    }
+
+    .footer-right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 24px;
+    }
+
+    .footer-contact {
+      font-family: 'Lexend', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--cream-light);
+      line-height: 28px;
+      white-space: nowrap;
+    }
+
+    .social-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--lime-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      flex-shrink: 0;
+      transition: opacity 0.15s;
+    }
+
+    .social-btn:hover { opacity: 0.85; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(64, 70, 129, 0.1);
+      padding: 40px var(--page-pad) 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-legal {
+      flex: 1;
+      font-family: 'Rethink Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--cream-dark);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .footer-date {
+      font-family: 'Rethink Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--cream-dark);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      :root { --page-pad: 16px; }
+
+      .hero-image { height: 260px; }
+      .hero-title h1 { font-size: 32px; }
+      .hero-title .hero-sub { font-size: 18px; }
+
+      .intro-content { flex-direction: column; gap: 32px; }
+      .intro-arrow { display: none; }
+
+      .header-nav a:not(:first-child):not(:last-child) { display: none; }
+
+      .footer-top { flex-wrap: wrap; gap: 24px; }
+      .footer-logo img { width: 200px; height: auto; }
+      .footer-right { flex-wrap: wrap; justify-content: flex-start; }
+
+      .stats-row { flex-wrap: wrap; gap: 32px; justify-content: flex-start; }
+      .stat-item { align-items: flex-start; }
+      .stat-number { font-size: 40px; line-height: 40px; }
+
+      .news-grid { flex-direction: column; gap: 32px; }
+      .news-card { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ HEADER ══ -->
+  <header>
+      <div class="header-logo">
+        <img src="assets/f2605e0c2150b5e9331d98a3aed9c24c8b4c9c53.png" alt="Thais Marques" />
+      </div>
+      <nav class="header-nav">
+        <a href="#">About me</a>
+        <a href="#">Clinical Mind AI</a>
+        <a href="#">ABC Bank Brazil</a>
+        <a href="#">My styleguide</a>
+      </nav>
+  </header>
+
+  <!-- ══ HERO ══ -->
+  <div class="hero">
+    <img class="hero-image" src="assets/hero.png" alt="Clinical Mind AI" />
+    <div class="hero-title">
+      <h1>Clinical Mind AI</h1>
+      <p class="hero-sub">Stanford University</p>
+    </div>
+  </div>
+
+    <!-- ══ INTRO ══ -->
+    <div class="intro">
+      <div class="intro-content">
+
+        <!-- Info cards -->
+        <div class="intro-cards">
+          <div class="info-card">
+            <p class="info-card-label">Role</p>
+            <p class="info-card-value">Senior Product Designer</p>
+          </div>
+          <div class="info-card">
+            <p class="info-card-label">Platforms</p>
+            <p class="info-card-value">Desktop and mobile</p>
+          </div>
+          <div class="info-card">
+            <p class="info-card-label">Country</p>
+            <p class="info-card-value">Global</p>
+          </div>
+        </div>
+
+        <!-- Decorative arrow -->
+        <img class="intro-arrow" src="assets/39a456dd183705c587529c3897727d34201b1e6a.svg" alt="" aria-hidden="true" />
+
+        <!-- Description -->
+        <div class="intro-text">
+          <div class="intro-text-block">
+            <p class="intro-heading">The project</p>
+            <p class="intro-body">A global innovative healthcare platform from Stanford University designed to enhance clinical reasoning through the power of AI. Focused on improving diagnostic accuracy and streamlining workflows for medical professionals, the platform integrates advanced machine learning models with intuitive UX to make learning easier.</p>
+          </div>
+          <a class="btn-outline-lime" href="https://clinicalmindai.stanford.edu/" target="_blank">
+            Check the website
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ DATA ══ -->
+    <div class="data-section">
+      <p class="section-title">Data</p>
+      <div class="stats-row">
+        <div class="stat-item">
+          <p class="stat-number">6</p>
+          <p class="stat-label">prizes earned</p>
+        </div>
+        <div class="stat-item">
+          <p class="stat-number">18</p>
+          <p class="stat-label">universities using</p>
+        </div>
+        <div class="stat-item">
+          <p class="stat-number">2000+</p>
+          <p class="stat-label">active users</p>
+        </div>
+        <div class="stat-item">
+          <p class="stat-number">18</p>
+          <p class="stat-label">universities using</p>
+        </div>
+        <div class="stat-item">
+          <p class="stat-number">18</p>
+          <p class="stat-label">universities using</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ IN THE NEWS ══ -->
+    <div class="news-section">
+      <p class="section-title">In the news</p>
+      <div class="news-grid">
+
+        <div class="news-card">
+          <img class="news-img" src="assets/news-taiwan.png" alt="Clinical Mind AI at Tri-Service General Hospital" />
+          <div class="news-content">
+            <p class="news-title">Clinical Mind AI Shared at Tri-Service General Hospital in Taiwan</p>
+            <a class="news-link" href="https://wwwv.tsgh.ndmutsgh.edu.tw/news/191/102550/33828/14232" target="_blank">
+              See article
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <img class="news-img" src="assets/news-qs.png" alt="QS Reimagine Education Awards 2025" />
+          <div class="news-content">
+            <p class="news-title">Gold for Best Use of Generative AI at QS Reimagine Education Awards 2025</p>
+            <a class="news-link" href="https://clinicalmindai.stanford.edu/news/clinical-mind-ai-wins-gold-best-use-generative-ai-qs-reimagine-education-awards-2025" target="_blank">
+              See article
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <img class="news-img" src="assets/news-openai.png" alt="Clinical Mind AI on OpenAI Academy" />
+          <div class="news-content">
+            <p class="news-title">Clinical Mind AI Featured on OpenAI Academy</p>
+            <a class="news-link" href="https://academy.openai.com/public/videos/marcos-rojas-health-2025-08-20" target="_blank">
+              See article
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ SUPER ADMIN ══ -->
+    <div class="content-section">
+      <div class="section-label">
+        <p class="section-title">Super Admin</p>
+        <p class="section-desc cream">Manages the entire platform, institutions, global settings, and communication tools.</p>
+      </div>
+      <img class="section-img" src="assets/dashboard-1.png" alt="Super Admin dashboard" />
+    </div>
+
+    <!-- ══ INSTITUTION ADMIN ══ -->
+    <div class="content-section gap-32">
+      <div class="section-label">
+        <p class="section-title">Institution admin</p>
+        <p class="section-desc">Manages users and courses within a single institution.</p>
+      </div>
+      <img class="section-img" src="assets/courses-1.png" alt="Institution admin courses" />
+    </div>
+
+    <!-- ══ INSTRUCTOR ══ -->
+    <div class="content-section gap-32">
+      <div class="section-label">
+        <p class="section-title">Instructor</p>
+        <p class="section-desc">The professor: creates activities, assigns cases, grades students, and analyzes course performance</p>
+      </div>
+      <img class="section-img" src="assets/course-analytics.png" alt="Course analytics" />
+      <img class="section-img" src="assets/rubric.png" alt="Rubric" />
+      <img class="section-img" src="assets/physical-examination.png" alt="Physical examination" />
+      <img class="section-img" src="assets/course-settings.png" alt="Course settings" />
+      <img class="section-img" src="assets/instructor-forum.png" alt="Instructor forum" />
+    </div>
+
+    <!-- ══ STUDENT ══ -->
+    <div class="content-section gap-32 centered">
+      <div class="section-label" style="width:100%">
+        <p class="section-title">Student</p>
+        <p class="section-desc">Engages with clinical case activities, receives feedback, and follows a learning journey via web or mobile</p>
+      </div>
+      <img class="section-img" src="assets/course-page.png" alt="Course page" />
+      <img class="section-img" src="assets/document.png" alt="Document" />
+      <img class="section-img" src="assets/voice-or-text.png" alt="Voice or text" />
+      <img class="section-img" src="assets/chatbot-1.png" alt="Chatbot" />
+      <img class="section-img" src="assets/chatbot-2.png" alt="Chatbot 2" />
+      <img class="section-img" src="assets/chatbot.png" alt="Chatbot 3" />
+      <img class="section-img" src="assets/60-yo.png" alt="60+ yo patient" />
+      <img class="section-img" src="assets/image.png" alt="Image" />
+      <img class="section-img mobile" src="assets/frame-16060.png" alt="Mobile" />
+    </div>
+
+    <!-- ══ FIGMA FILE ══ -->
+    <div class="figma-section">
+      <div class="figma-content">
+        <div class="figma-text">
+          <p class="section-title">Figma file</p>
+          <p class="figma-sub">Check the complete design of the platform</p>
+        </div>
+        <a class="btn-outline-figma" href="https://www.figma.com/design/eD92rvGwhb0fmh5rzg8E2h/Clinical-Mind-AI---v-2.0?node-id=0-1&t=dA6GtYkwqmE65Opc-1" target="_blank">
+          CMind on Figma
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- ══ LEARN MORE ══ -->
+    <div class="learn-more-section">
+      <p class="section-title">Learn more</p>
+      <div class="learn-more-video">
+        <iframe
+          src="https://player.vimeo.com/video/1111506651"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen
+          title="Clinical Mind AI — Learn more">
+        </iframe>
+      </div>
+    </div>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-logo">
+        <img src="assets/d9d42b3f3eb5253e6830918111ff3abe0670a15f.svg" alt="Thais Marques" />
+      </div>
+      <div class="footer-right">
+        <span class="footer-contact">+55 11 97167-5798</span>
+        <span class="footer-contact">thaispmarques1@gmail.com</span>
+        <!-- LinkedIn -->
+        <a class="social-btn" href="https://www.linkedin.com/in/thaispmarques/" target="_blank" aria-label="LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#404681" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect x="2" y="9" width="4" height="12"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
+        </a>
+        <!-- GitHub -->
+        <a class="social-btn" href="https://github.com/thaispmarques" target="_blank" aria-label="GitHub">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#404681" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-legal">© All cases displayed in this website are copyrighted</p>
+      <p class="footer-date">Updated in May/2026</p>
+    </div>
+  </footer>
+
+</body>
+</html>
